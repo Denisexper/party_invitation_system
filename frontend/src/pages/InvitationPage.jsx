@@ -52,26 +52,16 @@ function InvitationPage() {
       return;
     }
 
-    toast.promise(
-      async () => {
-        setConfirming(true);
-        try {
-          const data = await invitationService.confirm(id);
-          setInvitation(data.invitation);
-          setConfirmed(true);
-          return data;
-        } finally {
-          setConfirming(false);
-        }
-      },
-      {
-        loading: 'Confirmando asistencia...',
-        success: () => {
-          return '¡Listo! Tu asistencia ha sido confirmada 🎉';
-        },
-        error: 'No se pudo confirmar. Intenta de nuevo',
-      }
-    );
+    setConfirming(true);
+    try {
+      const data = await invitationService.confirm(id);
+      setInvitation(data.invitation);
+      setConfirmed(true);
+    } catch (err) {
+      alert('Error al confirmar. Por favor intenta de nuevo.');
+    } finally {
+      setConfirming(false);
+    }
   };
 
   const formatDate = (date) => {
@@ -87,22 +77,11 @@ function InvitationPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-neutral-900">
-        {/* Imagen de fondo */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1920&q=80')`,
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        
-        <div className="text-center relative z-10">
-          <div className="relative">
-            <span className="loading loading-spinner loading-lg text-rose-300"></span>
-          </div>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)' }}>
+        <div className="text-center">
+          <span className="loading loading-spinner loading-lg text-white"></span>
           <p className="text-white mt-6 text-lg font-serif italic animate-pulse">
-            Preparando tu invitación...
+            Cargando invitación...
           </p>
         </div>
       </div>
@@ -111,25 +90,13 @@ function InvitationPage() {
 
   if (error || !invitation) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-neutral-900">
-        {/* Imagen de fondo */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1920&q=80')`,
-          }}
-        ></div>
-        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-        
-        <div className="card w-full max-w-md bg-white shadow-2xl relative z-10">
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)' }}>
+        <div className="card w-full max-w-md bg-white shadow-2xl">
           <div className="card-body text-center p-8">
-            <div className="text-6xl mb-4">🥀</div>
+            <div className="text-6xl mb-4">💔</div>
             <h1 className="text-2xl font-bold text-gray-800 font-serif">Invitación no encontrada</h1>
             <p className="text-gray-600 mt-4">
               {error || 'Esta invitación no existe o ha sido eliminada'}
-            </p>
-            <p className="text-sm text-gray-400 mt-4">
-              Si crees que esto es un error, contacta con quien te envió la invitación
             </p>
           </div>
         </div>
@@ -138,212 +105,213 @@ function InvitationPage() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-neutral-900">
-      {/* Imagen de fondo de rosas reales */}
+    <div className="min-h-screen relative overflow-hidden bg-black">
+      {/* Imagen de fondo - Rosas rosadas hermosas */}
       <div 
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=1920&q=80')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1080&q=90')`,
         }}
       ></div>
       
-      {/* Overlay oscuro */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50"></div>
+      {/* Overlay degradado oscuro */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/85"></div>
 
-      {/* Viñeta en los bordes */}
-      <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]"></div>
-
-      <div className="relative z-10 flex items-center justify-center min-h-screen p-4 py-12">
-        <div className="w-full max-w-2xl">
+      {/* Contenido - TODO CENTRADO */}
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
+        <div className="w-full max-w-lg">
           
-          {/* Card principal con efecto de papel real */}
-          <div className="relative">
-            {/* Decoración de esquinas doradas */}
-            <div className="absolute -top-3 -left-3 w-16 h-16 border-t-4 border-l-4 border-amber-400 opacity-80 z-10"></div>
-            <div className="absolute -top-3 -right-3 w-16 h-16 border-t-4 border-r-4 border-amber-400 opacity-80 z-10"></div>
-            <div className="absolute -bottom-3 -left-3 w-16 h-16 border-b-4 border-l-4 border-amber-400 opacity-80 z-10"></div>
-            <div className="absolute -bottom-3 -right-3 w-16 h-16 border-b-4 border-r-4 border-amber-400 opacity-80 z-10"></div>
-
-            {/* Papel texturizado */}
-            <div 
-              className="relative bg-cover bg-center shadow-2xl"
-              style={{
-                backgroundImage: `url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuOSIgbnVtT2N0YXZlcz0iNCIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNub2lzZSkiIG9wYWNpdHk9IjAuMDUiLz48L3N2Zz4=')`,
-                backgroundColor: '#fdfbf7',
-              }}
-            >
-              <div className="p-8 md:p-12 border-8 border-double border-amber-600/30">
-                
-                {/* Header ornamental */}
-                <div className="text-center mb-8">
-                  <div className="inline-block">
-                    {/* Decoración superior */}
-                    <div className="flex items-center justify-center gap-4 mb-4">
-                      <div className="w-20 h-[2px] bg-gradient-to-r from-transparent via-amber-700 to-amber-700"></div>
-                      <div className="text-amber-700 text-3xl">❦</div>
-                      <div className="w-20 h-[2px] bg-gradient-to-l from-transparent via-amber-700 to-amber-700"></div>
-                    </div>
-                    
-                    <h1 className="text-5xl md:text-7xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-b from-amber-800 via-amber-700 to-amber-900 mb-3" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-                      XV Años
-                    </h1>
-                    
-                    {/* Decoración inferior */}
-                    <div className="flex items-center justify-center gap-4 mt-4">
-                      <div className="w-20 h-[2px] bg-gradient-to-r from-transparent via-amber-700 to-amber-700"></div>
-                      <div className="text-amber-700 text-3xl">❦</div>
-                      <div className="w-20 h-[2px] bg-gradient-to-l from-transparent via-amber-700 to-amber-700"></div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Frase elegante */}
-                <div className="text-center mb-8 px-4">
-                  <p className="text-lg md:text-xl font-serif italic text-amber-900/80 leading-relaxed">
-                    "Con la bendición de Dios y mis padres,
-                    <br />
-                    tengo el honor de invitarte a celebrar
-                    <br />
-                    este momento tan especial en mi vida"
-                  </p>
-                </div>
-
-                {/* Línea decorativa */}
-                <div className="flex items-center justify-center gap-3 my-6">
-                  <div className="w-12 h-[1px] bg-amber-700/40"></div>
-                  <div className="text-amber-700">✦</div>
-                  <div className="w-12 h-[1px] bg-amber-700/40"></div>
-                </div>
-
-                {/* Nombre de la quinceañera */}
-                <div className="text-center mb-8">
-                  <h2 className="text-4xl md:text-5xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-b from-rose-700 via-rose-600 to-rose-800 mb-2" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-                    {invitation.familia}
-                  </h2>
-                  <div className="flex items-center justify-center gap-2 mt-3">
-                    <div className="text-amber-700 text-sm">✿</div>
-                    <p className="text-amber-900/70 font-serif italic text-sm">Quinceañera</p>
-                    <div className="text-amber-700 text-sm">✿</div>
-                  </div>
-                </div>
-
-                {/* Información de pases */}
-                <div className="bg-gradient-to-br from-amber-50/50 to-rose-50/50 border-2 border-amber-300/50 rounded-lg p-6 mb-8 shadow-inner">
-                  <div className="text-center">
-                    <div className="inline-flex items-center justify-center gap-3 bg-white/70 rounded-full px-6 py-3 shadow-md border border-amber-200/50">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                      </svg>
-                      <div>
-                        <p className="text-xs text-amber-800/70 font-serif mb-0.5">Pases para</p>
-                        <p className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-700 to-rose-700">
-                          {invitation.personas}
-                        </p>
-                        <p className="text-xs text-amber-800/70 font-serif mt-0.5">
-                          {invitation.personas === 1 ? 'persona' : 'personas'}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Estado de confirmación */}
-                {confirmed || invitation.confirmado ? (
-                  <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-400 rounded-lg p-6 md:p-8 shadow-lg">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <h3 className="text-2xl md:text-3xl font-serif font-bold text-emerald-800 mb-2">
-                        ¡Confirmado!
-                      </h3>
-                      <p className="text-emerald-700 mb-3">
-                        Gracias por confirmar tu asistencia
-                      </p>
-                      {invitation.confirmadaEn && (
-                        <p className="text-xs text-emerald-600/80 mb-4 font-serif">
-                          Confirmado el: {formatDate(invitation.confirmadaEn)}
-                        </p>
-                      )}
-                      <div className="bg-white/80 rounded-lg p-4 mt-4 border border-emerald-200">
-                        <p className="text-lg font-serif italic text-emerald-800">
-                          "Será un honor y una alegría compartir
-                          <br />
-                          este día tan especial contigo"
-                        </p>
-                      </div>
-                      <p className="mt-6 text-emerald-700 font-semibold text-lg">
-                        ¡Nos vemos en la fiesta! 🎊
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-center">
-                    <p className="text-base md:text-lg font-serif text-amber-900/80 mb-6 leading-relaxed px-4">
-                      Por favor, confirma tu asistencia
-                      <br />
-                      <span className="text-sm text-amber-800/60 italic">
-                        para que podamos preparar todo con cariño
-                      </span>
-                    </p>
-                    
-                    {/* Botón realista con efecto 3D */}
-                    <button 
-                      onClick={handleConfirm} 
-                      disabled={confirming}
-                      className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 text-lg font-serif font-semibold text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                      style={{
-                        background: 'linear-gradient(to bottom, #f43f5e 0%, #e11d48 50%, #be123c 100%)',
-                        boxShadow: '0 8px 0 #881337, 0 12px 20px rgba(0,0,0,0.3)',
-                        borderRadius: '12px',
-                        transform: confirming ? 'translateY(4px)' : 'translateY(0)',
-                        border: '2px solid rgba(255,255,255,0.2)',
-                      }}
-                      onMouseDown={(e) => !confirming && (e.currentTarget.style.transform = 'translateY(4px)', e.currentTarget.style.boxShadow = '0 4px 0 #881337, 0 6px 10px rgba(0,0,0,0.3)')}
-                      onMouseUp={(e) => !confirming && (e.currentTarget.style.transform = 'translateY(0)', e.currentTarget.style.boxShadow = '0 8px 0 #881337, 0 12px 20px rgba(0,0,0,0.3)')}
-                      onMouseLeave={(e) => !confirming && (e.currentTarget.style.transform = 'translateY(0)', e.currentTarget.style.boxShadow = '0 8px 0 #881337, 0 12px 20px rgba(0,0,0,0.3)')}
-                    >
-                      {confirming ? (
-                        <>
-                          <span className="loading loading-spinner loading-sm"></span>
-                          Confirmando...
-                        </>
-                      ) : (
-                        <>
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-                          </svg>
-                          Confirmar mi Asistencia
-                        </>
-                      )}
-                    </button>
-                    
-                    <p className="text-xs text-amber-800/50 mt-6 font-serif italic px-4">
-                      Tu confirmación es muy importante para nosotros
-                    </p>
-                  </div>
-                )}
-
-                {/* Footer decorativo */}
-                <div className="mt-10 pt-6 border-t-2 border-amber-300/40">
-                  <div className="flex items-center justify-center gap-3 mb-3">
-                    <div className="text-amber-700 text-sm">✿</div>
-                    <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
-                    <div className="text-rose-600 text-lg">♡</div>
-                    <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
-                    <div className="text-amber-700 text-sm">✿</div>
-                  </div>
-                  <p className="text-center font-serif italic text-amber-900/70 text-sm">
-                    Con cariño te esperamos
-                  </p>
-                </div>
-
+          {/* Card principal con todo el contenido */}
+          <div className="text-center">
+            
+            {/* MIS XV AÑOS - MÁS GRANDE Y ROSADO */}
+            <div className="mb-6">
+              <h2 className="text-6xl md:text-7xl lg:text-8xl font-serif tracking-[0.3em] mb-4" style={{ 
+                fontFamily: "'Cormorant Garamond', serif", 
+                background: 'linear-gradient(135deg, #fda4af 0%, #fb7185 50%, #f43f5e 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 0 40px rgba(251, 113, 133, 0.5)',
+                filter: 'drop-shadow(0 4px 20px rgba(251, 113, 133, 0.4))'
+              }}>
+                MIS XV
+                <br />
+                AÑOS
+              </h2>
+              <div className="flex items-center justify-center gap-4">
+                <div className="w-20 h-[2px] bg-gradient-to-r from-transparent to-rose-400"></div>
+                <div className="text-rose-300 text-2xl">✦</div>
+                <div className="w-20 h-[2px] bg-gradient-to-l from-transparent to-rose-400"></div>
               </div>
             </div>
-          </div>
 
+            {/* Nombre de la quinceañera */}
+            <div className="mb-6">
+              <h1 className="text-5xl md:text-6xl font-serif font-light text-white tracking-wide" style={{ 
+                fontFamily: "'Cormorant Garamond', serif", 
+                textShadow: '0 2px 20px rgba(0,0,0,0.8)' 
+              }}>
+                Esperanza Vásquez
+              </h1>
+            </div>
+
+            {/* Fecha */}
+            <div className="mb-6">
+              <div className="inline-block bg-white/5 backdrop-blur-md border border-rose-300/20 rounded-2xl px-10 py-5">
+                <p className="text-rose-200 text-sm font-serif tracking-wide mb-1">VIERNES</p>
+                <p className="text-6xl font-light text-white">08</p>
+                <p className="text-xl text-rose-200 font-serif tracking-wide">AGOSTO 2026</p>
+              </div>
+            </div>
+
+            {/* BOTÓN DE CONFIRMAR - VISIBLE DESDE EL INICIO */}
+            {confirmed || invitation.confirmado ? (
+              /* CONFIRMADO */
+              <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md border-2 border-rose-300/30 rounded-3xl p-8 mb-6 shadow-2xl">
+                <div className="relative inline-block mb-6">
+                  <div className="absolute inset-0 bg-rose-400/30 rounded-full blur-2xl animate-pulse"></div>
+                  <div className="relative w-24 h-24 bg-gradient-to-br from-rose-400 to-pink-500 rounded-full flex items-center justify-center shadow-2xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-14 w-14 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                </div>
+
+                <h3 className="text-4xl font-serif font-light text-white mb-4" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  ¡Asistencia Confirmada!
+                </h3>
+                
+                <p className="text-white/80 text-lg mb-6">
+                  Gracias por confirmar
+                </p>
+
+                {invitation.confirmadaEn && (
+                  <p className="text-rose-300/70 text-sm mb-6">
+                    {formatDate(invitation.confirmadaEn)}
+                  </p>
+                )}
+
+                <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                  <p className="text-white/90 text-lg leading-relaxed font-light italic" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    "Será un honor y una alegría
+                    <br />
+                    compartir este día tan especial contigo"
+                  </p>
+                </div>
+
+                <div className="mt-6 flex items-center justify-center gap-2">
+                  <div className="text-rose-300 text-2xl">🌹</div>
+                  <p className="text-rose-300 text-lg font-serif">¡Te esperamos!</p>
+                  <div className="text-rose-300 text-2xl">🌹</div>
+                </div>
+              </div>
+            ) : (
+              /* BOTÓN ROSADO ELEGANTE - VISIBLE DESDE EL INICIO */
+              <div className="mb-8">
+                <button 
+                  onClick={handleConfirm} 
+                  disabled={confirming}
+                  className="w-full group relative overflow-hidden disabled:opacity-60"
+                  style={{
+                    background: 'linear-gradient(135deg, #fb7185 0%, #f43f5e 50%, #e11d48 100%)',
+                    border: '2px solid rgba(255, 255, 255, 0.3)',
+                    borderRadius: '24px',
+                    padding: '20px 24px',
+                    boxShadow: '0 10px 40px rgba(244, 63, 94, 0.5), 0 0 60px rgba(251, 113, 133, 0.3), inset 0 1px 0 rgba(255,255,255,0.2)',
+                    transition: 'all 0.3s ease',
+                  }}
+                  onTouchStart={(e) => {
+                    if (!confirming) {
+                      e.currentTarget.style.transform = 'scale(0.96)';
+                      e.currentTarget.style.boxShadow = '0 5px 20px rgba(244, 63, 94, 0.5)';
+                    }
+                  }}
+                  onTouchEnd={(e) => {
+                    if (!confirming) {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = '0 10px 40px rgba(244, 63, 94, 0.5)';
+                    }
+                  }}
+                >
+                  {/* Efecto de brillo */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-x-[-200%] group-active:translate-x-[200%] transition-transform duration-700"></div>
+                  
+                  <div className="relative z-10 flex items-center justify-center gap-3">
+                    {confirming ? (
+                      <>
+                        <span className="loading loading-spinner loading-md text-white"></span>
+                        <span className="text-white text-xl font-serif font-semibold tracking-wide">Confirmando...</span>
+                      </>
+                    ) : (
+                      <>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-white text-xl font-serif font-semibold tracking-wide">CONFIRMAR ASISTENCIA</span>
+                      </>
+                    )}
+                  </div>
+                </button>
+              </div>
+            )}
+
+            {/* Información adicional - DESPUÉS DEL BOTÓN */}
+            <div className="space-y-6">
+              
+              {/* Dirección */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6">
+                <div className="flex items-start justify-center gap-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-rose-300 flex-shrink-0 mt-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <div className="text-center">
+                    <p className="text-white/60 text-xs font-light mb-2 uppercase tracking-wide">Lugar del evento</p>
+                    <p className="text-white text-base leading-relaxed font-light">
+                      Rancho Cuco Lindo
+                      <br />
+                      El Cuco, Chirilagua
+                      <br />
+                      San Miguel
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pases */}
+              <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-5">
+                <div className="flex items-center justify-center gap-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-rose-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  <div className="text-center">
+                    <p className="text-white/60 text-xs font-light mb-1">PASES PARA</p>
+                    <p className="text-lg text-white/80 font-serif mb-1">{invitation.familia}</p>
+                    <p className="text-3xl font-light text-white">{invitation.personas}</p>
+                    <p className="text-white/60 text-xs font-light mt-1">
+                      {invitation.personas === 1 ? 'PERSONA' : 'PERSONAS'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Footer */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <div className="text-rose-300/50 text-sm">✿</div>
+                <div className="w-10 h-[1px] bg-rose-300/30"></div>
+                <div className="text-rose-300/70">♡</div>
+                <div className="w-10 h-[1px] bg-rose-300/30"></div>
+                <div className="text-rose-300/50 text-sm">✿</div>
+              </div>
+              <p className="text-white/50 text-sm font-light italic" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                Con cariño te esperamos
+              </p>
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
