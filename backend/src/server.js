@@ -18,11 +18,13 @@ app.use(morgan("dev"))
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://party-invitation-system.vercel.app',  // ✅ Tu frontend desplegado
-    'https://party-invitation-system-git-main-denisexpers-projects.vercel.app',
-    'https://party-invitation-system-6b4qly94a-denisexpers-projects.vercel.app'
+    'https://party-invitation-system-frontend.vercel.app',  // ✅ FRONTEND
+    'https://party-invitation-system-frontend-git-main-denisexpers-projects.vercel.app',  // ✅ FRONTEND
+    'https://party-invitation-system-frontend-a7psa8fzh-denisexpers-projects.vercel.app'  // ✅ FRONTEND
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 //ruta raiz
