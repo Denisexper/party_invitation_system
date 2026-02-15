@@ -1,5 +1,7 @@
-// src/components/InvitationCard.jsx
 import { useState } from "react";
+
+// ✅ Variable compartida entre todas las cards
+let whatsappWindow = null;
 
 function InvitationCard({ invitation, onDelete }) {
   const [copied, setCopied] = useState(false);
@@ -13,19 +15,30 @@ function InvitationCard({ invitation, onDelete }) {
   };
 
   const handleShareWhatsApp = () => {
-    const message = `✨ ¡Hola ${invitation.familia}! ✨
+    // ✅ Mensaje sin espacios extras
+    const message = `Hola ${invitation.familia}!
 
-      Con mucha ilusión te invito a celebrar mis XV Años. 
+Con mucha alegria te invito a celebrar mis XV Años.
 
-      Será un honor contar con tu presencia en este día tan especial para mí.
+Fecha: 08 de Agosto, 2026
+Lugar: Rancho Cuco Lindo, El Cuco
 
-👑    Ver invitación y confirmar asistencia:
-      ${invitationURL}
+Tu presencia seria el mejor regalo.
 
-      ¡Te espero! 💕`;
+Ver invitacion y confirmar asistencia:
+${invitationURL}
+
+Te espero!`;
 
     const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsappURL, "whatsapp-share");
+    
+    // ✅ Reutilizar ventana existente o crear nueva
+    if (whatsappWindow && !whatsappWindow.closed) {
+      whatsappWindow.location.href = whatsappURL;
+      whatsappWindow.focus();
+    } else {
+      whatsappWindow = window.open(whatsappURL, 'whatsapp-share');
+    }
   };
 
   const formatDate = (date) => {
