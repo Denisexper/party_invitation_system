@@ -25,6 +25,18 @@ app.use(cors({
   credentials: true
 }));
 
+//ruta raiz
+app.get('/', (req, res) => {
+  res.json({ 
+    message: '✅ Backend funcionando',
+    status: 'OK',
+    endpoints: {
+      register: '/app/register',
+      login: '/app/login'
+    }
+  });
+});
+
 //levantamos la configuracion con el puerto
 app.listen(port, () => console.log(`server up at port: ${port}`))
 
