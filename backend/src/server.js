@@ -15,7 +15,13 @@ app.use(express.json());
 app.use(morgan("dev"))
 
 //permitimos la conexion con el frontend
-app.use(cors())
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://tu-frontend.vercel.app'  // actualizarás esto después
+  ],
+  credentials: true
+}));
 
 //levantamos la configuracion con el puerto
 app.listen(port, () => console.log(`server up at port: ${port}`))
