@@ -18,7 +18,9 @@ app.use(morgan("dev"))
 app.use(cors({
   origin: [
     'http://localhost:5173',
-    'https://tu-frontend.vercel.app'  // actualizarás esto después
+    'https://party-invitation-system.vercel.app',  // ✅ Tu frontend desplegado
+    'https://party-invitation-system-git-main-denisexpers-projects.vercel.app',
+    'https://party-invitation-system-6b4qly94a-denisexpers-projects.vercel.app'
   ],
   credentials: true
 }));
